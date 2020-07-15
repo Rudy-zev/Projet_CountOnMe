@@ -11,23 +11,33 @@ import XCTest
 
 class SimpleCalcTests: XCTestCase {
     
+    var simpleCalcul: SimpleCalc!
+    
     func testGiven6Elements_WhenTappedEqualButton_ThenLoopAnd0Elements() {
+        let elements = ["3", "+", "3", "+", "3"]
+        
+        simpleCalcul.calcul(elements)
+        
+        XCTAssertEqual(elements.count, 0)
+    }
+    
+    func testGivenAddition_WhenTappedEqualButton_ThenResult() {
         
     }
     
-    func testGivenAddition_WhenTappedEqualButton_ThenResultAddition() {
+    func testGivenSubstraction_WhenTappedEqualButton_ThenResult() {
         
     }
     
-    func testGivenSubstraction_WhenTappedEqualButton_ThenResultAddition() {
+    func testGivenMultiplication_WhenTappedEqualButton_ThenResult() {
         
     }
     
-    func testGivenMultiplication_WhenTappedEqualButton_ThenResultAddition() {
+    func testGivenDivision_WhenTappedEqualButton_ThenResult() {
         
     }
     
-    func testGivenDivision_WhenTappedEqualButton_ThenResultAddition() {
+    func testGivenCalculationPriority_WhenTappedEqualButton_ThenResult() {
         
     }
 

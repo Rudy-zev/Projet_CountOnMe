@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:../CountOnMe/Supporting Files">
+      location = "group:/Users/rudy/Desktop/POpenClassroom/5-ProjetAme&#x301;liorezApplication/Projet_CountOnMe/CountOnMeTests/CountOnMeUITests">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
