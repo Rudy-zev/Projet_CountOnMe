@@ -9,7 +9,7 @@
 import Foundation
 
 class SimpleCalc {
-    public func calcul(_ elements: [String]) {
+    public func calcul(_ elements: [String]) ->  [String] {
         var operationsToReduce = elements
         
         while operationsToReduce.count > 1 {
@@ -28,5 +28,6 @@ class SimpleCalc {
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
+        return operationsToReduce
     }
 }

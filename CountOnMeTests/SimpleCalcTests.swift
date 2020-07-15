@@ -14,31 +14,57 @@ class SimpleCalcTests: XCTestCase {
     var simpleCalcul: SimpleCalc!
     
     func testGiven6Elements_WhenTappedEqualButton_ThenLoopAnd0Elements() {
-        let elements = ["3", "+", "3", "+", "3"]
+        simpleCalcul = SimpleCalc()
+        var elements = ["3", "+", "3", "+", "3"]
         
-        simpleCalcul.calcul(elements)
+        elements = simpleCalcul.calcul(elements)
         
-        XCTAssertEqual(elements.count, 0)
+        XCTAssertEqual(elements.count, 1)
     }
     
     func testGivenAddition_WhenTappedEqualButton_ThenResult() {
+        simpleCalcul = SimpleCalc()
+        var elements = ["3", "+", "3"]
         
+        elements = simpleCalcul.calcul(elements)
+        
+        XCTAssertEqual(Int(elements.first!), 6)
     }
     
     func testGivenSubstraction_WhenTappedEqualButton_ThenResult() {
+        simpleCalcul = SimpleCalc()
+        var elements = ["3", "-", "3"]
         
+        elements = simpleCalcul.calcul(elements)
+        
+        XCTAssertEqual(Int(elements.first!), 0)
     }
     
     func testGivenMultiplication_WhenTappedEqualButton_ThenResult() {
+        simpleCalcul = SimpleCalc()
+        var elements = ["3", "x", "3"]
         
+        elements = simpleCalcul.calcul(elements)
+        
+        XCTAssertEqual(Int(elements.first!), 9)
     }
     
     func testGivenDivision_WhenTappedEqualButton_ThenResult() {
+        simpleCalcul = SimpleCalc()
+        var elements = ["3", "%", "3"]
         
+        elements = simpleCalcul.calcul(elements)
+        
+        XCTAssertEqual(Int(elements.first!), 1)
     }
     
     func testGivenCalculationPriority_WhenTappedEqualButton_ThenResult() {
+        simpleCalcul = SimpleCalc()
+        var elements = ["3", "+", "3", "x", "3", "+", "3", "%", "3"]
         
+        elements = simpleCalcul.calcul(elements)
+        
+        XCTAssertEqual(Int(elements.first!), 13)
     }
 
 }
