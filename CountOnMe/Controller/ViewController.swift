@@ -57,9 +57,7 @@ class ViewController: UIViewController {
         if canAddOperator {
             textView.text.append(" + ")
         } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
+            alertManagement(AlertMessage: "Un operateur est déja mis !")
         }
     }
     
@@ -67,9 +65,7 @@ class ViewController: UIViewController {
         if canAddOperator {
             textView.text.append(" - ")
         } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
+            alertManagement(AlertMessage: "Un operateur est déja mis !")
         }
     }
     
@@ -77,9 +73,7 @@ class ViewController: UIViewController {
         if canAddOperator {
             textView.text.append(" x ")
         } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
+            alertManagement(AlertMessage: "Un operateur est déja mis !")
         }
     }
     
@@ -87,9 +81,7 @@ class ViewController: UIViewController {
         if canAddOperator {
             textView.text.append(" % ")
         } else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Un operateur est déja mis !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alertVC, animated: true, completion: nil)
+            alertManagement(AlertMessage: "Un operateur est déja mis !")
         }
     }
     
@@ -129,6 +121,12 @@ class ViewController: UIViewController {
         }
         
         textView.text.append(" = \(operationsToReduce.first!)")
+    }
+    
+    private func alertManagement(AlertMessage: String) {
+        let alertVC = UIAlertController(title: "Zéro!", message: AlertMessage, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
     }
 
 }
