@@ -17,7 +17,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
         var elements = ["3", "+", "3", "+", "3"]
         
-        elements = simpleCalcul.calcul(elements)
+        elements = simpleCalcul.basicCalcul(elements)
         
         XCTAssertEqual(elements.count, 1)
     }
@@ -26,7 +26,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
         var elements = ["3", "+", "3"]
         
-        elements = simpleCalcul.calcul(elements)
+        elements = simpleCalcul.basicCalcul(elements)
         
         XCTAssertEqual(Int(elements.first!), 6)
     }
@@ -35,7 +35,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
         var elements = ["3", "-", "3"]
         
-        elements = simpleCalcul.calcul(elements)
+        elements = simpleCalcul.basicCalcul(elements)
         
         XCTAssertEqual(Int(elements.first!), 0)
     }
@@ -44,7 +44,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
         var elements = ["3", "x", "3"]
         
-        elements = simpleCalcul.calcul(elements)
+        elements = simpleCalcul.basicCalcul(elements)
         
         XCTAssertEqual(Int(elements.first!), 9)
     }
@@ -53,7 +53,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
         var elements = ["3", "%", "3"]
         
-        elements = simpleCalcul.calcul(elements)
+        elements = simpleCalcul.basicCalcul(elements)
         
         XCTAssertEqual(Int(elements.first!), 1)
     }
@@ -62,7 +62,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
         var elements = ["3", "+", "3", "x", "3", "+", "3", "%", "3"]
         
-        elements = simpleCalcul.calcul(elements)
+        elements = simpleCalcul.basicCalcul(elements)
         
         XCTAssertEqual(Int(elements.first!), 13)
     }
