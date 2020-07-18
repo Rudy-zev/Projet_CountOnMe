@@ -44,7 +44,7 @@ class SimpleCalc {
     }
     
     // Use to prevent division by zero
-    public func DivisionByZero(_ elements: [String]) ->  Bool {
+    public func divisionByZero(_ elements: [String]) ->  Bool {
         var test = false
         for item in elements {
             if item == "%" {

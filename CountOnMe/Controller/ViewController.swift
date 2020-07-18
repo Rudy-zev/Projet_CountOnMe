@@ -108,7 +108,7 @@ class ViewController: UIViewController {
         var operationsToReduce = elements
         
         if !expressionHaveResult {
-            if !calcul.DivisionByZero(operationsToReduce) {
+            if !calcul.divisionByZero(operationsToReduce) {
                 operationsToReduce = calcul.basicCalcul(operationsToReduce)
                 textView.text.append(" = \(operationsToReduce.first!)")
             } else {
