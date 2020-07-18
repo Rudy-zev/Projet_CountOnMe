@@ -20,19 +20,19 @@ class ViewController: UIViewController {
     
     // Error check computed variables
     var expressionIsCorrect: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "%"
+        return calcul.expressionIsCorrect(elements)
     }
     
     var expressionHaveEnoughElement: Bool {
-        return elements.count >= 3
+        return calcul.expressionHaveEnoughElement(elements)
     }
     
     var canAddOperator: Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "%"
+        return calcul.expressionIsCorrect(elements)
     }
     
     var expressionHaveResult: Bool {
-        return textView.text.firstIndex(of: "=") != nil
+        return calcul.expressionHaveResult(textView.text)
     }
     
     // View Life cycles
@@ -53,6 +53,10 @@ class ViewController: UIViewController {
         }
         
         textView.text.append(numberText)
+    }
+    
+    @IBAction func tappedAcButton(_ sender: UIButton) {
+        textView.text = ""
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
@@ -89,13 +93,13 @@ class ViewController: UIViewController {
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         guard expressionIsCorrect else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Entrez une expression correcte !", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: "Erreur", message: "Entrez une expression correcte !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
         }
         
         guard expressionHaveEnoughElement else {
-            let alertVC = UIAlertController(title: "Zéro!", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: "Erreur", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
         }
@@ -103,13 +107,22 @@ class ViewController: UIViewController {
         // Create local copy of operations
         var operationsToReduce = elements
         
-        operationsToReduce = calcul.basicCalcul(operationsToReduce)
-        
-        textView.text.append(" = \(operationsToReduce.first!)")
+        if !expressionHaveResult {
+            if !calcul.DivisionByZero(operationsToReduce) {
+                operationsToReduce = calcul.basicCalcul(operationsToReduce)
+                textView.text.append(" = \(operationsToReduce.first!)")
+            } else {
+                alertManagement(AlertMessage: "La division par 0 est impossible.")
+                textView.text = ""
+            }
+        } else {
+            alertManagement(AlertMessage: "Vous avez déja votre résultat.")
+        }
+       
     }
     
     private func alertManagement(AlertMessage: String) {
-        let alertVC = UIAlertController(title: "Zéro!", message: AlertMessage, preferredStyle: .alert)
+        let alertVC = UIAlertController(title: "Erreur", message: AlertMessage, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }

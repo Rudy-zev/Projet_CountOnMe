@@ -9,6 +9,18 @@
 import Foundation
 
 class SimpleCalc {
+    public func expressionIsCorrect(_ elements: [String]) ->  Bool {
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "%"
+    }
+    
+    public func expressionHaveEnoughElement(_ elements: [String]) ->  Bool {
+        return elements.count >= 3
+    }
+    
+    public func expressionHaveResult(_ text: String!) ->  Bool {
+        return text.firstIndex(of: "=") != nil
+    }
+    
     public func basicCalcul(_ elements: [String]) ->  [String] {
         var operationsToReduce = elements
         
@@ -29,6 +41,23 @@ class SimpleCalc {
             operationsToReduce.insert("\(result)", at: 0)
         }
         return operationsToReduce
+    }
+    
+    // Use to prevent division by zero
+    public func DivisionByZero(_ elements: [String]) ->  Bool {
+        var test = false
+        for item in elements {
+            if item == "%" {
+                let index: Int!
+                index = elements.firstIndex(of: "%")
+                let right = Int(elements[index! + 1])!
+                
+                if right == 0 {
+                    test = true
+                }
+            }
+        }
+        return test
     }
     
     // Method used to manage calculation priorities

@@ -66,5 +66,33 @@ class SimpleCalcTests: XCTestCase {
         
         XCTAssertEqual(Int(elements.first!), 13)
     }
-
+    
+    func testGivenCalculation_WhenDivisionBy0_ThenErrorMessage() {
+        simpleCalcul = SimpleCalc()
+        let elements = ["3", "%", "0"]
+        
+        XCTAssertTrue(simpleCalcul.DivisionByZero(elements))
+    }
+    
+    func testGivenLastEntriesIsOperator_WhenAddOperator_ThenError() {
+        simpleCalcul = SimpleCalc()
+        let elements = ["3", "%"]
+        
+        XCTAssertFalse(simpleCalcul.expressionIsCorrect(elements))
+    }
+    
+    func testGiven3Entries_WhenValideToCalculation_ThenError() {
+        simpleCalcul = SimpleCalc()
+        let elements = ["3", "%"]
+        
+        XCTAssertFalse(simpleCalcul.expressionHaveEnoughElement(elements))
+    }
+    
+    func testGivenCalculEnd_WhenEqualAgain_ThenError() {
+        simpleCalcul = SimpleCalc()
+        let elements = "3 % 3 = 1"
+               
+        XCTAssertTrue(simpleCalcul.expressionHaveResult(elements))
+        
+    }
 }
