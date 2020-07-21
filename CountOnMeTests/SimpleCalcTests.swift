@@ -51,7 +51,7 @@ class SimpleCalcTests: XCTestCase {
     }
     
     func testGivenDivision_WhenTappedEqualButton_ThenResult() {
-        var elements = ["3", "%", "3"]
+        var elements = ["3", "/", "3"]
         
         elements = simpleCalcul.basicCalcul(elements)
         
@@ -59,7 +59,7 @@ class SimpleCalcTests: XCTestCase {
     }
     
     func testGivenCalculationPriority_WhenTappedEqualButton_ThenResult() {
-        var elements = ["3", "+", "3", "x", "3", "+", "3", "%", "3"]
+        var elements = ["3", "+", "3", "x", "3", "+", "3", "/", "3"]
         
         elements = simpleCalcul.basicCalcul(elements)
         
@@ -67,25 +67,25 @@ class SimpleCalcTests: XCTestCase {
     }
     
     func testGivenCalculation_WhenDivisionBy0_ThenErrorMessage() {
-        let elements = ["3", "%", "0"]
+        let elements = ["3", "/", "0"]
         
         XCTAssertTrue(simpleCalcul.divisionByZero(elements))
     }
     
     func testGivenLastEntriesIsOperator_WhenAddOperator_ThenError() {
-        let elements = ["3", "%"]
+        let elements = ["3", "/"]
         
         XCTAssertFalse(simpleCalcul.expressionIsCorrect(elements))
     }
     
     func testGiven3Entries_WhenValideToCalculation_ThenError() {
-        let elements = ["3", "%"]
+        let elements = ["3", "/"]
         
         XCTAssertFalse(simpleCalcul.expressionHaveEnoughElement(elements))
     }
     
     func testGivenCalculEnd_WhenEqualAgain_ThenError() {
-        let elements = "3 % 3 = 1"
+        let elements = "3 / 3 = 1"
                
         XCTAssertTrue(simpleCalcul.expressionHaveResult(elements))
         

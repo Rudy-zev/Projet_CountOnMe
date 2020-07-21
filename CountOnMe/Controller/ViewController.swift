@@ -85,7 +85,7 @@ class ViewController: UIViewController {
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
         if canAddOperator {
-            textView.text.append(" % ")
+            textView.text.append(" / ")
         } else {
             alertManagement(AlertMessage: "Un operateur est déja mis !")
         }

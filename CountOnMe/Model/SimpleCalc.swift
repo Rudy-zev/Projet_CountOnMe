@@ -10,7 +10,7 @@ import Foundation
 
 class SimpleCalc {
     public func expressionIsCorrect(_ elements: [String]) ->  Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "%"
+        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
     
     public func expressionHaveEnoughElement(_ elements: [String]) ->  Bool {
@@ -47,9 +47,9 @@ class SimpleCalc {
     public func divisionByZero(_ elements: [String]) ->  Bool {
         var test = false
         for item in elements {
-            if item == "%" {
+            if item == "/" {
                 let index: Int!
-                index = elements.firstIndex(of: "%")
+                index = elements.firstIndex(of: "/")
                 let right = Int(elements[index! + 1])!
                 
                 if right == 0 {
@@ -65,12 +65,12 @@ class SimpleCalc {
         var operationsToReduce = elements
 
         for element in operationsToReduce {
-            if element == "x" || element == "%" {
+            if element == "x" || element == "/" {
                 let index: Int!
                 if element == "x" {
                     index = operationsToReduce.firstIndex(of: "x")
                 } else {
-                    index = operationsToReduce.firstIndex(of: "%")
+                    index = operationsToReduce.firstIndex(of: "/")
                 }
                 
                 let left = Int(operationsToReduce[index! - 1])!
