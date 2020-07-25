@@ -21,6 +21,23 @@ class SimpleCalc {
         return text.firstIndex(of: "=") != nil
     }
     
+    // Use to prevent division by zero
+    public func divisionByZero(_ elements: [String]) ->  Bool {
+        var test = false
+        for item in elements {
+            if item == "/" {
+                let index: Int!
+                index = elements.firstIndex(of: "/")
+                let right = Int(elements[index! + 1])!
+                
+                if right == 0 {
+                    test = true
+                }
+            }
+        }
+        return test
+    }
+    
     public func basicCalcul(_ elements: [String]) ->  [String] {
         var operationsToReduce = elements
         
@@ -43,22 +60,7 @@ class SimpleCalc {
         return operationsToReduce
     }
     
-    // Use to prevent division by zero
-    public func divisionByZero(_ elements: [String]) ->  Bool {
-        var test = false
-        for item in elements {
-            if item == "/" {
-                let index: Int!
-                index = elements.firstIndex(of: "/")
-                let right = Int(elements[index! + 1])!
-                
-                if right == 0 {
-                    test = true
-                }
-            }
-        }
-        return test
-    }
+
     
     // Method used to manage calculation priorities
     private func priorityCalcul(_ elements: [String]) ->  [String] {

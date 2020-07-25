@@ -18,23 +18,7 @@ class ViewController: UIViewController {
         return textView.text.split(separator: " ").map { "\($0)" }
     }
     
-    // Error check computed variables
-    var expressionIsCorrect: Bool {
-        return calcul.expressionIsCorrect(elements)
-    }
-    
-    var expressionHaveEnoughElement: Bool {
-        return calcul.expressionHaveEnoughElement(elements)
-    }
-    
-    var canAddOperator: Bool {
-        return calcul.expressionIsCorrect(elements)
-    }
-    
-    var expressionHaveResult: Bool {
-        return calcul.expressionHaveResult(textView.text)
-    }
-    
+
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +32,7 @@ class ViewController: UIViewController {
             return
         }
         
-        if expressionHaveResult {
+        if calcul.expressionHaveResult(textView.text) {
             textView.text = ""
         }
         
@@ -60,7 +44,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        if canAddOperator {
+        if calcul.expressionIsCorrect(elements) {
             textView.text.append(" + ")
         } else {
             alertManagement(AlertMessage: "Un operateur est déja mis !")
@@ -68,7 +52,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        if canAddOperator {
+        if calcul.expressionIsCorrect(elements) {
             textView.text.append(" - ")
         } else {
             alertManagement(AlertMessage: "Un operateur est déja mis !")
@@ -76,7 +60,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        if canAddOperator {
+        if calcul.expressionIsCorrect(elements) {
             textView.text.append(" x ")
         } else {
             alertManagement(AlertMessage: "Un operateur est déja mis !")
@@ -84,7 +68,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        if canAddOperator {
+        if calcul.expressionIsCorrect(elements) {
             textView.text.append(" / ")
         } else {
             alertManagement(AlertMessage: "Un operateur est déja mis !")
@@ -92,13 +76,13 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        guard expressionIsCorrect else {
+        guard calcul.expressionIsCorrect(elements) else {
             let alertVC = UIAlertController(title: "Erreur", message: "Entrez une expression correcte !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
         }
         
-        guard expressionHaveEnoughElement else {
+        guard calcul.expressionHaveEnoughElement(elements) else {
             let alertVC = UIAlertController(title: "Erreur", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
             alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             return self.present(alertVC, animated: true, completion: nil)
@@ -107,7 +91,7 @@ class ViewController: UIViewController {
         // Create local copy of operations
         var operationsToReduce = elements
         
-        if !expressionHaveResult {
+        if !calcul.expressionHaveResult(textView.text) {
             if !calcul.divisionByZero(operationsToReduce) {
                 operationsToReduce = calcul.basicCalcul(operationsToReduce)
                 textView.text.append(" = \(operationsToReduce.first!)")
