@@ -18,7 +18,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul = SimpleCalc()
     }
     
-    func testGiven6Elements_WhenTappedEqualButton_ThenLoopAnd0Elements() {
+   /* func testGiven6Elements_WhenTappedEqualButton_ThenLoopAnd0Elements() {
         var elements = ["3", "+", "3", "+", "3"]
         
         elements = simpleCalcul.basicCalcul(elements)
@@ -89,5 +89,5 @@ class SimpleCalcTests: XCTestCase {
                
         XCTAssertTrue(simpleCalcul.expressionHaveResult(elements))
         
-    }
+    } */
 }

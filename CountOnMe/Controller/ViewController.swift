@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        /* calcul.delegate = self */ 
     }
     
     // View actions
@@ -87,12 +88,14 @@ class ViewController: UIViewController {
         }
         
         // Create local copy of operations
-        var operationsToReduce = elements
+        let operationsToReduce = elements
         
         if !calcul.expressionHaveResult(textView.text) {
             if !calcul.divisionByZero(operationsToReduce) {
-                operationsToReduce = calcul.basicCalcul(operationsToReduce)
-                textView.text.append(" = \(operationsToReduce.first!)")
+                calcul.basicCalcul(operationsToReduce) { (data) in
+                    textView.text.append(" = \(data.first!)")
+                }
+                
             } else {
                 alertManagement(AlertMessage: "La division par 0 est impossible.")
                 textView.text = ""
@@ -110,4 +113,11 @@ class ViewController: UIViewController {
     }
 
 }
+
+// MARK: - Implement delegate
+/* extension ViewController: CalculDelagate {
+    func basicCalculEnd(_ elements: [String]) {
+        textView.text.append(" = \(elements.first!)")
+    }  
+} */
 

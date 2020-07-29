@@ -7,8 +7,13 @@
 //
 
 import Foundation
+/*protocol CalculDelagate {
+    func basicCalculEnd(_ elements: [String])
+}*/
 
 class SimpleCalc {
+    /*var delegate: CalculDelagate?*/
+    
     public func expressionIsCorrect(_ elements: [String]) ->  Bool {
         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
     }
@@ -38,8 +43,8 @@ class SimpleCalc {
         return test
     }
     
-    public func basicCalcul(_ elements: [String]) ->  [String] {
-        var operationsToReduce = elements
+    public func basicCalcul(_ elements: [String], completion: ((_ data: [String]) -> Void)) {
+       var operationsToReduce = elements
         
         operationsToReduce = priorityCalcul(operationsToReduce)
         
@@ -57,7 +62,9 @@ class SimpleCalc {
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
-        return operationsToReduce
+        
+        completion(operationsToReduce)
+        /* delegate?.basicCalculEnd(operationsToReduce) */
     }
     
 
