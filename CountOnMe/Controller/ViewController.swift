@@ -17,14 +17,12 @@ class ViewController: UIViewController {
     var elements: [String] {
         return textView.text.split(separator: " ").map { "\($0)" }
     }
-    
 
     // View Life cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-    
     
     // View actions
     @IBAction func tappedNumberButton(_ sender: UIButton) {
