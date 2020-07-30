@@ -14,37 +14,44 @@ import Foundation
 class SimpleCalc {
     /*var delegate: CalculDelagate?*/
     
-    public func expressionIsCorrect(_ elements: [String]) ->  Bool {
-        return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
+    private func setUpArray(_ elementsText: String) -> [String] {
+        return elementsText.split(separator: " ").map { "\($0)" }
     }
     
-    public func expressionHaveEnoughElement(_ elements: [String]) ->  Bool {
-        return elements.count >= 3
+    public func expressionIsCorrect(_ elements: String, callbacks: ((_ expressionIsCorrect: Bool) -> Void)) {
+        let operationsToReduce = setUpArray(elements)
+         callbacks(operationsToReduce.last != "+" && operationsToReduce.last != "-" && operationsToReduce.last != "x" && operationsToReduce.last != "/")
     }
     
-    public func expressionHaveResult(_ text: String!) ->  Bool {
-        return text.firstIndex(of: "=") != nil
+    public func expressionHaveEnoughElement(_ elements: String, callbacks: ((_ expressionHaveEnoughElement: Bool) -> Void)) {
+        let operationsToReduce = setUpArray(elements)
+        callbacks(operationsToReduce.count >= 3)
+    }
+    
+    public func expressionHaveResult(_ text: String!, callbacks: ((_ expressionHaveResult: Bool) -> Void)) {
+        callbacks(text.firstIndex(of: "=") != nil)
     }
     
     // Use to prevent division by zero
-    public func divisionByZero(_ elements: [String]) ->  Bool {
+    public func divisionByZero(_ elements: String, callbacks: ((_ divisionByZero: Bool) -> Void)) {
+        let operationsToReduce = setUpArray(elements)
         var test = false
-        for item in elements {
+        for item in operationsToReduce {
             if item == "/" {
                 let index: Int!
-                index = elements.firstIndex(of: "/")
-                let right = Int(elements[index! + 1])!
+                index = operationsToReduce.firstIndex(of: "/")
+                let right = Int(operationsToReduce[index! + 1])!
                 
                 if right == 0 {
                     test = true
                 }
             }
         }
-        return test
+        callbacks(test)
     }
     
-    public func basicCalcul(_ elements: [String], completion: ((_ data: [String]) -> Void)) {
-       var operationsToReduce = elements
+    public func basicCalcul(_ elements: String, callbacks: ((_ elements: [String]) -> Void)) {
+       var operationsToReduce = setUpArray(elements)
         
         operationsToReduce = priorityCalcul(operationsToReduce)
         
@@ -63,7 +70,7 @@ class SimpleCalc {
             operationsToReduce.insert("\(result)", at: 0)
         }
         
-        completion(operationsToReduce)
+        callbacks(operationsToReduce)
         /* delegate?.basicCalculEnd(operationsToReduce) */
     }
     

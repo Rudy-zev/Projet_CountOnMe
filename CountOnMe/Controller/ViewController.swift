@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     
     var calcul = SimpleCalc()
     
-    var elements: [String] {
-        return textView.text.split(separator: " ").map { "\($0)" }
+    var elements: String {
+        return textView.text
     }
 
     // View Life cycles
@@ -31,8 +31,10 @@ class ViewController: UIViewController {
             return
         }
         
-        if calcul.expressionHaveResult(textView.text) {
-            textView.text = ""
+        calcul.expressionHaveResult(textView.text) { (expressionHaveResult) in
+            if expressionHaveResult {
+                textView.text = ""
+            }
         }
         
         textView.text.append(numberText)
@@ -43,66 +45,95 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        if calcul.expressionIsCorrect(elements) {
-            textView.text.append(" + ")
-        } else {
-            alertManagement(AlertMessage: "Un operateur est déja mis !")
+        calcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
+            if expressionIsCorrect {
+                textView.text.append(" + ")
+            } else {
+                alertManagement(AlertMessage: "Un operateur est déja mis !")
+            }
         }
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        if calcul.expressionIsCorrect(elements) {
-            textView.text.append(" - ")
-        } else {
-            alertManagement(AlertMessage: "Un operateur est déja mis !")
+        calcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
+            if expressionIsCorrect {
+                textView.text.append(" - ")
+            } else {
+                alertManagement(AlertMessage: "Un operateur est déja mis !")
+            }
         }
     }
     
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        if calcul.expressionIsCorrect(elements) {
-            textView.text.append(" x ")
-        } else {
-            alertManagement(AlertMessage: "Un operateur est déja mis !")
+        calcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
+            if expressionIsCorrect {
+                textView.text.append(" x ")
+            } else {
+                alertManagement(AlertMessage: "Un operateur est déja mis !")
+            }
         }
     }
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        if calcul.expressionIsCorrect(elements) {
-            textView.text.append(" / ")
-        } else {
-            alertManagement(AlertMessage: "Un operateur est déja mis !")
+        calcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
+            if expressionIsCorrect {
+                textView.text.append(" / ")
+            } else {
+                alertManagement(AlertMessage: "Un operateur est déja mis !")
+            }
         }
     }
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
-        guard calcul.expressionIsCorrect(elements) else {
-            let alertVC = UIAlertController(title: "Erreur", message: "Entrez une expression correcte !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
+        /* calcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
+            guard expressionIsCorrect else {
+                let alertVC = UIAlertController(title: "Erreur", message: "Entrez une expression correcte !", preferredStyle: .alert)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                return self.present(alertVC, animated: true, completion: nil)
+            }
         }
         
-        guard calcul.expressionHaveEnoughElement(elements) else {
-            let alertVC = UIAlertController(title: "Erreur", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            return self.present(alertVC, animated: true, completion: nil)
-        }
+        calcul.expressionHaveEnoughElement(elements) { (expressionHaveEnoughElement) in
+            guard expressionHaveEnoughElement else {
+                let alertVC = UIAlertController(title: "Erreur", message: "Démarrez un nouveau calcul !", preferredStyle: .alert)
+                alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                return self.present(alertVC, animated: true, completion: nil)
+            }
+        } */
         
         // Create local copy of operations
-        let operationsToReduce = elements
+        //let operationsToReduce = elements
         
-        if !calcul.expressionHaveResult(textView.text) {
-            if !calcul.divisionByZero(operationsToReduce) {
-                calcul.basicCalcul(operationsToReduce) { (data) in
-                    textView.text.append(" = \(data.first!)")
+        calcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
+            if expressionIsCorrect {
+                calcul.expressionHaveEnoughElement(elements) { (expressionHaveEnoughElement) in
+                    if expressionHaveEnoughElement {
+                        calcul.expressionHaveResult(textView.text) { (expressionHaveResult) in
+                            if !expressionHaveResult {
+                                calcul.divisionByZero(elements) { (divisionByZero) in
+                                    if !divisionByZero {
+                                        calcul.basicCalcul(elements) { (elements) in
+                                            textView.text.append(" = \(elements.first!)")
+                                        }
+                                    } else {
+                                        alertManagement(AlertMessage: "La division par 0 est impossible.")
+                                        textView.text = ""
+                                    }
+                                }
+                            } else {
+                                alertManagement(AlertMessage: "Vous avez déja votre résultat.")
+                            }
+                        }
+                    } else {
+                        alertManagement(AlertMessage: "Démarrez un nouveau calcul !")
+                    }
                 }
-                
             } else {
-                alertManagement(AlertMessage: "La division par 0 est impossible.")
-                textView.text = ""
+                alertManagement(AlertMessage: "Entrez une expression correcte !")
             }
-        } else {
-            alertManagement(AlertMessage: "Vous avez déja votre résultat.")
         }
+        
+        
        
     }
     
