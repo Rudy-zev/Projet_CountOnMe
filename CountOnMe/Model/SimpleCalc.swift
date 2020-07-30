@@ -56,11 +56,11 @@ class SimpleCalc {
         operationsToReduce = priorityCalcul(operationsToReduce)
         
         while operationsToReduce.count > 1 {
-            let left = Int(operationsToReduce[0])!
+            let left = Float(operationsToReduce[0])!
             let operand = operationsToReduce[1]
-            let right = Int(operationsToReduce[2])!
+            let right = Float(operationsToReduce[2])!
                          
-            let result: Int
+            let result: Float
             switch operand {
             case "+": result = left + right
             case "-": result = left - right
@@ -89,10 +89,10 @@ class SimpleCalc {
                     index = operationsToReduce.firstIndex(of: "/")
                 }
                 
-                let left = Int(operationsToReduce[index! - 1])!
-                let right = Int(operationsToReduce[index! + 1])!
+                let left = Float(operationsToReduce[index! - 1])!
+                let right = Float(operationsToReduce[index! + 1])!
                     
-                let result: Int
+                let result: Float
                 
                 if element == "x" {
                     result = left * right

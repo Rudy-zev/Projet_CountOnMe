@@ -30,7 +30,7 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3 + 3"
         
         simpleCalcul.basicCalcul(elements) { (data) in
-            XCTAssertEqual(Int(data.first!), 6)
+            XCTAssertEqual(Float(data.first!), 6)
         }
     }
     
@@ -38,7 +38,7 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3 - 3"
         
         simpleCalcul.basicCalcul(elements) { (data) in
-            XCTAssertEqual(Int(data.first!), 0)
+            XCTAssertEqual(Float(data.first!), 0)
         }
     }
     
@@ -46,7 +46,7 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3 x 3"
         
         simpleCalcul.basicCalcul(elements) { (data) in
-            XCTAssertEqual(Int(data.first!), 9)
+            XCTAssertEqual(Float(data.first!), 9)
         }
     }
     
@@ -54,7 +54,7 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3 / 3"
         
         simpleCalcul.basicCalcul(elements) { (data) in
-            XCTAssertEqual(Int(data.first!), 1)
+            XCTAssertEqual(Float(data.first!), 1)
         }
     }
     
@@ -62,7 +62,15 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3 + 3 x 3 + 3 / 3"
         
         simpleCalcul.basicCalcul(elements) { (data) in
-            XCTAssertEqual(Int(data.first!), 13)
+            XCTAssertEqual(Float(data.first!), 13)
+        }
+    }
+    
+    func testGivenCalculationDivision_WhenTappedEqualButton_ThenResultFloat() {
+        let elements = "7 / 2"
+        
+        simpleCalcul.basicCalcul(elements) { (data) in
+            XCTAssertEqual(Float(data.first!), 3.5)
         }
     }
     
