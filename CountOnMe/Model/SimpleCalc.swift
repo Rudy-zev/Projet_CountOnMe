@@ -7,50 +7,81 @@
 //
 
 import Foundation
-/*protocol CalculDelagate {
-    func basicCalculEnd(_ elements: [String])
-}*/
 
 class SimpleCalc {
-    /*var delegate: CalculDelagate?*/
     
     private func setUpArray(_ elementsText: String) -> [String] {
         return elementsText.split(separator: " ").map { "\($0)" }
     }
     
-    public func expressionIsCorrect(_ elements: String, callbacks: ((_ expressionIsCorrect: Bool) -> Void)) {
+    public func expressionIsCorrectShort(_ elements : String, succes: (() -> Void), error: ((_ errorMessage : String) -> Void)){
         let operationsToReduce = setUpArray(elements)
-         callbacks(operationsToReduce.last != "+" && operationsToReduce.last != "-" && operationsToReduce.last != "x" && operationsToReduce.last != "/")
+        
+        if operationsToReduce.last != "+" && operationsToReduce.last != "-" && operationsToReduce.last != "x" && operationsToReduce.last != "/" {
+            succes()
+        } else {
+            error("Un operateur est déja mis !")
+        }
     }
     
-    public func expressionHaveEnoughElement(_ elements: String, callbacks: ((_ expressionHaveEnoughElement: Bool) -> Void)) {
-        let operationsToReduce = setUpArray(elements)
-        callbacks(operationsToReduce.count >= 3)
+    public func expressionHaveResultShort(_ elements : String, succes: (() -> Void)){
+        if elements.firstIndex(of: "=") != nil {
+            succes()
+        }
     }
     
-    public func expressionHaveResult(_ text: String!, callbacks: ((_ expressionHaveResult: Bool) -> Void)) {
-        callbacks(text.firstIndex(of: "=") != nil)
+    public func errorManagementEqualTap(_ elements : String, succes: (() -> Void), error: ((_ errorMessage : String) -> Void)){
+        let operationsToReduce = setUpArray(elements)
+        
+        if expressionIsCorrect(operationsToReduce) {
+            if expressionHaveEnoughElement(operationsToReduce) {
+                if !expressionHaveResult(elements) {
+                    if !divisionByZero(operationsToReduce) {
+                        succes()
+                    } else {
+                        error("La division par 0 est impossible.")
+                    }
+                } else {
+                    error("Vous avez déja votre résultat.")
+                }
+            } else {
+                error("Démarrez un nouveau calcul !")
+            }
+        } else {
+            error("Entrez une expression correcte !")
+        }
+    }
+    
+    private func expressionIsCorrect(_ elements: [String]) -> Bool {
+         return elements.last != "+" && elements.last != "-" && elements.last != "x" && elements.last != "/"
+    }
+    
+    private func expressionHaveEnoughElement(_ elements: [String]) -> Bool {
+        return elements.count >= 3
+    }
+    
+    private func expressionHaveResult(_ elementsString: String) -> Bool  {
+        return elementsString.firstIndex(of: "=") != nil
     }
     
     // Use to prevent division by zero
-    public func divisionByZero(_ elements: String, callbacks: ((_ divisionByZero: Bool) -> Void)) {
-        let operationsToReduce = setUpArray(elements)
+    private func divisionByZero(_ elements: [String]) -> Bool  {
         var test = false
-        for item in operationsToReduce {
+        for item in elements {
             if item == "/" {
                 let index: Int!
-                index = operationsToReduce.firstIndex(of: "/")
-                let right = Int(operationsToReduce[index! + 1])!
+                index = elements.firstIndex(of: "/")
+                let right = Int(elements[index! + 1])!
                 
                 if right == 0 {
                     test = true
                 }
             }
         }
-        callbacks(test)
+        return test
     }
     
-    public func basicCalcul(_ elements: String, callbacks: ((_ elements: [String]) -> Void)) {
+    public func basicCalcul(_ elements: String, callback: ((_ elements: [String]) -> Void)) {
        var operationsToReduce = setUpArray(elements)
         
         operationsToReduce = priorityCalcul(operationsToReduce)
@@ -62,15 +93,15 @@ class SimpleCalc {
                          
             let result: Float
             switch operand {
-            case "+": result = left + right
-            case "-": result = left - right
-            default: fatalError("Unknown operator !")
+                case "+": result = left + right
+                case "-": result = left - right
+                default: fatalError("Unknown operator !")
             }
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
             operationsToReduce.insert("\(result)", at: 0)
         }
         
-        callbacks(operationsToReduce)
+        callback(operationsToReduce)
         /* delegate?.basicCalculEnd(operationsToReduce) */
     }
     

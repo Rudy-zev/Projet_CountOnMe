@@ -77,32 +77,53 @@ class SimpleCalcTests: XCTestCase {
     func testGivenCalculation_WhenDivisionBy0_ThenErrorMessage() {
         let elements = "3 / 0"
 
-        simpleCalcul.divisionByZero(elements) { (divisionByZero) in
-            XCTAssertTrue(divisionByZero)
+        simpleCalcul.errorManagementEqualTap(elements, succes: {
+            
+        }) { (errorMessage) in
+            XCTAssertTrue(errorMessage == "La division par 0 est impossible.")
         }
     }
     
     func testGivenLastEntriesIsOperator_WhenAddOperator_ThenError() {
         let elements = "3 /"
 
-        simpleCalcul.expressionIsCorrect(elements) { (expressionIsCorrect) in
-            XCTAssertFalse(expressionIsCorrect)
+        simpleCalcul.expressionIsCorrectShort(elements, succes: {
+        
+        }) { (errorMessage) in
+            XCTAssertTrue(errorMessage == "Un operateur est déja mis !")
+        }
+        
+        simpleCalcul.errorManagementEqualTap(elements, succes: {
+            
+        }) { (errorMessage) in
+            XCTAssertTrue(errorMessage == "Entrez une expression correcte !")
         }
     }
     
     func testGiven3Entries_WhenValideToCalculation_ThenError() {
-        let elements = "3 x"
+        let elements = "3"
 
-        simpleCalcul.expressionHaveEnoughElement(elements) { (expressionHaveEnoughElement) in
-            XCTAssertFalse(expressionHaveEnoughElement)
+        simpleCalcul.errorManagementEqualTap(elements, succes: {
+            
+        }) { (errorMessage) in
+            XCTAssertTrue(errorMessage == "Démarrez un nouveau calcul !")
         }
     }
     
     func testGivenCalculEnd_WhenEqualAgain_ThenError() {
-        let elementsText = "3 / 3 = 1"
+        let elements = "3 / 3 = 1"
+        var test = false
         
-        simpleCalcul.expressionHaveResult(elementsText) { (expressionHaveResult) in
-            XCTAssertTrue(expressionHaveResult)
+        simpleCalcul.expressionHaveResultShort(elements) {
+            test = true
+        }
+        
+        XCTAssertTrue(test)
+        
+        simpleCalcul.errorManagementEqualTap(elements, succes: {
+            
+        }) { (errorMessage) in
+            XCTAssertTrue(errorMessage == "Vous avez déja votre résultat.")
         }
     }
 }
