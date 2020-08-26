@@ -14,41 +14,41 @@ class SimpleCalc {
         return elementsText.split(separator: " ").map { "\($0)" }
     }
     
-    public func expressionIsCorrectShort(_ elements : String, succes: (() -> Void), error: ((_ errorMessage : String) -> Void)){
+    public func errorManagementOperatorTap(_ elements : String, success: (() -> Void), error: ((_ errorCode : String) -> Void)){
         let operationsToReduce = setUpArray(elements)
         
-        if operationsToReduce.last != "+" && operationsToReduce.last != "-" && operationsToReduce.last != "x" && operationsToReduce.last != "/" {
-            succes()
+       if expressionIsCorrect(operationsToReduce) {
+            success()
         } else {
-            error("Un operateur est déja mis !")
+            error("code01")
         }
     }
     
-    public func expressionHaveResultShort(_ elements : String, succes: (() -> Void)){
-        if elements.firstIndex(of: "=") != nil {
-            succes()
+    public func errorManagementNumberTap(_ elements : String, success: (() -> Void)){
+        if expressionHaveResult(elements) {
+            success()
         }
     }
     
-    public func errorManagementEqualTap(_ elements : String, succes: (() -> Void), error: ((_ errorMessage : String) -> Void)){
+    public func errorManagementEqualTap(_ elements : String, success: (() -> Void), error: ((_ errorCode : String) -> Void)){
         let operationsToReduce = setUpArray(elements)
         
         if expressionIsCorrect(operationsToReduce) {
             if expressionHaveEnoughElement(operationsToReduce) {
                 if !expressionHaveResult(elements) {
                     if !divisionByZero(operationsToReduce) {
-                        succes()
+                        success()
                     } else {
-                        error("La division par 0 est impossible.")
+                        error("code05")
                     }
                 } else {
-                    error("Vous avez déja votre résultat.")
+                    error("code04")
                 }
             } else {
-                error("Démarrez un nouveau calcul !")
+                error("code03")
             }
         } else {
-            error("Entrez une expression correcte !")
+            error("code02")
         }
     }
     
@@ -102,7 +102,6 @@ class SimpleCalc {
         }
         
         callback(operationsToReduce)
-        /* delegate?.basicCalculEnd(operationsToReduce) */
     }
     
 

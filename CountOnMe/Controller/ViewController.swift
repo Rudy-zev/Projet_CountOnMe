@@ -22,7 +22,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        /* calcul.delegate = self */ 
     }
     
     // View actions
@@ -31,7 +30,7 @@ class ViewController: UIViewController {
             return
         }
         
-        calcul.expressionHaveResultShort(elements) {
+        calcul.errorManagementNumberTap(elements) {
             textView.text = ""
         }
         
@@ -43,61 +42,70 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tappedAdditionButton(_ sender: UIButton) {
-        calcul.expressionIsCorrectShort(elements, succes: {
+        calcul.errorManagementOperatorTap(elements, success: {
             textView.text.append(" + ")
-        }) { (errorMessage) in
-            alertManagement(AlertMessage: errorMessage)
+        }) { (errorCode) in
+            alertManagement(errorCode: errorCode)
         }
     }
     
     @IBAction func tappedSubstractionButton(_ sender: UIButton) {
-        calcul.expressionIsCorrectShort(elements, succes: {
+        calcul.errorManagementOperatorTap(elements, success: {
             textView.text.append(" - ")
-        }) { (errorMessage) in
-            alertManagement(AlertMessage: errorMessage)
+        }) { (errorCode) in
+            alertManagement(errorCode: errorCode)
         }
     }
     
     @IBAction func tappedMultiplicationButton(_ sender: UIButton) {
-        calcul.expressionIsCorrectShort(elements, succes: {
+        calcul.errorManagementOperatorTap(elements, success: {
             textView.text.append(" x ")
-        }) { (errorMessage) in
-            alertManagement(AlertMessage: errorMessage)
+        }) { (errorCode) in
+            alertManagement(errorCode: errorCode)
         }
     }
     
     @IBAction func tappedDivisionButton(_ sender: UIButton) {
-        calcul.expressionIsCorrectShort(elements, succes: {
+        calcul.errorManagementOperatorTap(elements, success: {
             textView.text.append(" / ")
-        }) { (errorMessage) in
-            alertManagement(AlertMessage: errorMessage)
+        }) { (errorCode) in
+            alertManagement(errorCode: errorCode)
         }
     }
     
     @IBAction func tappedEqualButton(_ sender: UIButton) {
         
-        calcul.errorManagementEqualTap(elements, succes: {
+        calcul.errorManagementEqualTap(elements, success: {
             calcul.basicCalcul(elements) { (elements) in
                 textView.text.append(" = \(elements.first!)")
             }
-        }) { (errorMessage) in
-            alertManagement(AlertMessage: errorMessage)
+        }) { (errorCode) in
+            alertManagement(errorCode: errorCode)
         }
      
     }
     
-    private func alertManagement(AlertMessage: String) {
-        let alertVC = UIAlertController(title: "Erreur", message: AlertMessage, preferredStyle: .alert)
+    private func alertManagement(errorCode: String) {
+        var alertMessage: String
+        
+        switch errorCode {
+        case "code01":
+            alertMessage = "Un operateur est déja mis !"
+        case "code02":
+            alertMessage = "Entrez une expression correcte !"
+        case "code03":
+            alertMessage = "Démarrez un nouveau calcul !"
+        case "code04":
+            alertMessage = "Vous avez déja votre résultat."
+        case "code05":
+            alertMessage = "La division par 0 est impossible."
+        default:
+            alertMessage = "error"
+        }
+        
+        let alertVC = UIAlertController(title: "Erreur", message: alertMessage, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
 
 }
-
-// MARK: - Implement delegate
-/* extension ViewController: CalculDelagate {
-    func basicCalculEnd(_ elements: [String]) {
-        textView.text.append(" = \(elements.first!)")
-    }  
-} */
-
