@@ -80,7 +80,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul.errorManagementEqualTap(elements, success: {
             
         }) { (errorCode) in
-            XCTAssertTrue(errorCode == "La division par 0 est impossible.")
+            XCTAssertTrue(errorCode == "code05")
         }
     }
     
@@ -90,13 +90,13 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul.errorManagementOperatorTap(elements, success: {
         
         }) { (errorCode) in
-            XCTAssertTrue(errorCode == "Un operateur est déja mis !")
+            XCTAssertTrue(errorCode == "code01")
         }
         
         simpleCalcul.errorManagementEqualTap(elements, success: {
             
         }) { (errorCode) in
-            XCTAssertTrue(errorCode == "Entrez une expression correcte !")
+            XCTAssertTrue(errorCode == "code02")
         }
     }
     
@@ -106,7 +106,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul.errorManagementEqualTap(elements, success: {
             
         }) { (errorCode) in
-            XCTAssertTrue(errorCode == "Démarrez un nouveau calcul !")
+            XCTAssertTrue(errorCode == "code03")
         }
     }
     
@@ -123,7 +123,7 @@ class SimpleCalcTests: XCTestCase {
         simpleCalcul.errorManagementEqualTap(elements, success: {
             
         }) { (errorCode) in
-            XCTAssertTrue(errorCode == "Vous avez déja votre résultat.")
+            XCTAssertTrue(errorCode == "code04")
         }
     }
 }
