@@ -82,6 +82,7 @@ class SimpleCalc {
     }
     
     public func basicCalcul(_ elements: String, callback: ((_ elements: [String]) -> Void)) {
+        
        var operationsToReduce = setUpArray(elements)
         
         operationsToReduce = priorityCalcul(operationsToReduce)
@@ -98,9 +99,9 @@ class SimpleCalc {
                 default: fatalError("Unknown operator !")
             }
             operationsToReduce = Array(operationsToReduce.dropFirst(3))
-            operationsToReduce.insert("\(result)", at: 0)
+            operationsToReduce.insert(result.clean, at: 0)
         }
-        
+
         callback(operationsToReduce)
     }
     
@@ -130,11 +131,18 @@ class SimpleCalc {
                     result = left / right
                 }
                 
-                operationsToReduce[index!] = "\(result)"
+                operationsToReduce[index!] = result.clean
                 operationsToReduce.remove(at: index! - 1)
                 operationsToReduce.remove(at: index!)
             }
         }
+        
         return operationsToReduce
+    }
+}
+
+extension Float {
+    var clean: String {
+       return self.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0f", self) : String(self)
     }
 }
