@@ -89,18 +89,18 @@ class ViewController: UIViewController {
         var alertMessage: String
         
         switch errorCode {
-        case "code01":
-            alertMessage = "Un operateur est déja mis !"
-        case "code02":
-            alertMessage = "Entrez une expression correcte !"
-        case "code03":
-            alertMessage = "Démarrez un nouveau calcul !"
-        case "code04":
-            alertMessage = "Vous avez déja votre résultat."
-        case "code05":
-            alertMessage = "La division par 0 est impossible."
-        default:
-            alertMessage = "error"
+            case "code01":
+                alertMessage = "Un operateur est déja mis !"
+            case "code02":
+                alertMessage = "Entrez une expression correcte !"
+            case "code03":
+                alertMessage = "Démarrez un nouveau calcul !"
+            case "code04":
+                alertMessage = "Vous avez déja votre résultat."
+            case "code05":
+                alertMessage = "La division par 0 est impossible."
+            default:
+                alertMessage = "error"
         }
         
         let alertVC = UIAlertController(title: "Erreur", message: alertMessage, preferredStyle: .alert)

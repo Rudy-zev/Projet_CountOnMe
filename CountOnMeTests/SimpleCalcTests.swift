@@ -78,23 +78,17 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3 / 0"
 
         simpleCalcul.errorManagementEqualTap(elements, success: {
-            
+            XCTAssertTrue(false)
         }) { (errorCode) in
             XCTAssertTrue(errorCode == "code05")
         }
     }
     
-    func testGivenLastEntriesIsOperator_WhenAddOperator_ThenError() {
+    func testGivenLastEntriesIsOperator_WhenAddOperatorAfterTheResult_ThenError() {
         let elements = "3 /"
 
-        simpleCalcul.errorManagementOperatorTap(elements, success: {
-        
-        }) { (errorCode) in
-            XCTAssertTrue(errorCode == "code01")
-        }
-        
         simpleCalcul.errorManagementEqualTap(elements, success: {
-            
+            XCTAssertTrue(false)
         }) { (errorCode) in
             XCTAssertTrue(errorCode == "code02")
         }
@@ -104,13 +98,34 @@ class SimpleCalcTests: XCTestCase {
         let elements = "3"
 
         simpleCalcul.errorManagementEqualTap(elements, success: {
-            
+            XCTAssertTrue(false)
         }) { (errorCode) in
             XCTAssertTrue(errorCode == "code03")
         }
     }
     
     func testGivenCalculEnd_WhenEqualAgain_ThenError() {
+        let elements = "3 / 3 = 1"
+        
+        simpleCalcul.errorManagementEqualTap(elements, success: {
+            XCTAssertTrue(false)
+        }) { (errorCode) in
+            XCTAssertTrue(errorCode == "code04")
+        }
+    }
+    
+    func testGivenLastEntriesIsOperator_WhenAddOperator_ThenError() {
+        let elements = "3 /"
+
+        simpleCalcul.errorManagementOperatorTap(elements, success: {
+            XCTAssertTrue(false)
+        }) { (errorCode) in
+            XCTAssertTrue(errorCode == "code01")
+        }
+    }
+    
+    
+    func testGivenCalculEnd_WhenNumberTap_ThenCleanTextView() {
         let elements = "3 / 3 = 1"
         var test = false
         
@@ -119,11 +134,5 @@ class SimpleCalcTests: XCTestCase {
         }
         
         XCTAssertTrue(test)
-        
-        simpleCalcul.errorManagementEqualTap(elements, success: {
-            
-        }) { (errorCode) in
-            XCTAssertTrue(errorCode == "code04")
-        }
     }
 }
